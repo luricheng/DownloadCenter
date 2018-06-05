@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>文件上传</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/js.js"></script>
+</head>
+<body>
+<div class="topBar">
+  <a href="downloadLog">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="/userInfo" id="topBarId" th:text=${session.id}></a>
+  <a href="/logout" id="logout">注销</a>
+</div>
+
+<div class="title"><h1>文件上传</h1></div>
+
+<div id="msg"></div>
+
+<form id="uploadFileForm" action="fileUpload" method="post" enctype="multipart/form-data">
+  <table>
+    <tr>
+      <td colspan="2"><input name="id" type="text" id="softwareId" placeholder="软件ID"></td>
+    </tr>
+    <tr>
+      <td colspan="2"><input name="name" type="text" id="name" placeholder="软件名"></td>
+    </tr>
+    <tr>
+      <td colspan="2"><textarea name="introduce" type="text" id="introduce" placeholder="软件介绍"></textarea></td>
+    </tr>
+    <tr>
+      <td><label for="fileName">软件上传: </label></td>
+      <td><input id="fileName" name="fileName" type="file"></td>
+    </tr>
+    <tr>
+      <td><label for="imgName">图片上传: </label></td>
+      <td><input id="imgName" name="imgName" type="file"></td>
+    </tr>
+    <tr align="right">
+      <td></td>
+      <td><button onclick="submitSoftware()">提交</button></td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

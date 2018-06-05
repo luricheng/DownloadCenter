@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+    function updateQuestion() {
+      $.post('/getSecureQuestion',{
+        "inputId": $('#id').text()
+      },function (data) {
+        data = eval(data)
+        $('#question').val(data.question)
+        $('#answer').val(data.answer)
+      },'JSON')
+    }
+    function changeQuestion() {
+      $.post('/updateSecureQuestion',{
+        'question': $('#question').val(),
+        'answer': $('#answer').val()
+      },function (msg) {
+        $('#msg').empty()
+        $('#msg').html("<h2 style='color: red;'>"+msg+"</h2>")
+      })
+    }
+  </script>
+
+</head>
+<body>
+<div class="topBar">
+  <a href="downloadLog">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="/userInfo" id="id" th:text="${session.id}"></a>
+  <a href="/logout" id="logout">注销</a>
+</div>
+<div class="title"><h1>安全问题设置</h1></div>
+
+<div id="msg"></div>
+
+<table>
+  <tr>
+    <td>
+      <label for="question">问题: </label>
+    </td>
+    <td>
+      <input id="question" name="question">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label for="answer">答案: </label>
+    </td>
+    <td>
+      <input id="answer" name="answer">
+    </td>
+  </tr>
+  <tr align="right">
+    <td></td>
+    <td>
+      <button onclick="changeQuestion()">更新</button>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  updateQuestion()
+</script>
+
+</body>
+</html>

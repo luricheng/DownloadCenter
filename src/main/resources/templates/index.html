@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  
+  <script type="text/javascript" src="/js.js"></script>
+  
+</head>
+<body>
+<div class="topBar">
+
+  <div th:if="${session.id}" class="topBar">
+    <a href="downloadLog">历史下载</a>
+    <a href="/userInfo" id="id" th:text="${session.id}"></a>
+    <a href="/logout" id="logout">注销</a>
+  </div>
+
+  <div th:if="not ${session.id}" class="topBar">
+    <a href="login">历史下载</a>
+    <a href="register" id="register">注册</a>
+    <a href="login" id="login">登录</a>
+  </div>
+
+</div>
+
+<div class="title">
+  <h1 align="center">软件下载中心</h1>
+</div>
+
+<div style="text-align: right">
+  <a href="/downloadRank"><button style="margin: initial;">下载排行</button></a>
+</div>
+
+<div id="softwareList">
+
+</div>
+
+<script type="text/javascript">
+  $.get('/getSoftwareList',
+    function (data) {
+      list = eval(data);
+      htmlCode=""
+      for(var i=0;i<list.length;++i){
+        software=list[i]
+        htmlCode = getSofwareHtmlBlock(software)
+      }
+      $('#softwareList').empty();
+      $('#softwareList').html(htmlCode);
+    },'JSON')
+</script>
+</body>
+</html>

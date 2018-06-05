@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<div class="topBar">
+  <a href="login">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="register" id="register">注册</a>
+  <a href="login" id="login">登录</a>
+</div>
+<div class="title"><h1>登录</h1></div>
+<div th:if="${msg}">
+  <h2 th:text="${msg}" style="color: red"></h2>
+</div>
+<form action="/loginSubmit", method="post">
+  <table>
+    <tr align="right">
+      <td colspan="2">
+        <label for="id">用户名: </label><input id="id" name="id">
+      </td>
+    </tr>
+    <tr align="right">
+      <td colspan="2"><label for="password">密码: </label><input id="password" name="password" type="password"></td>
+    </tr>
+    <tr align="right">
+      <td>
+        <a href="/retrievePassword">忘了密码</a>
+      </td>
+      <td>
+        <input type="submit" value="提交">
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

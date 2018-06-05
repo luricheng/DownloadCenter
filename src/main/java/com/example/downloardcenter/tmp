@@ -1,0 +1,26 @@
+
+public Software(String id, String name, String source, String introduce, String downloadlink, String imglink,String downloadCount){
+        setId(Integer.valueOf(id));
+        setName(name);
+        setSource(source);
+        setIntroduce(introduce);
+        setDownloadlink(downloadlink);
+        setImglink(imglink);
+        setDownloadcount(Integer.valueOf(downloadCount));
+    }
+    public Software(int id, String name, String source, String introduce, String downloadlink, String imglink, int downloadcount){
+        setId(id);
+        setName(name);
+        setSource(source);
+        setIntroduce(introduce);
+        setDownloadlink(downloadlink);
+        setImglink(imglink);
+        setDownloadcount(downloadcount);
+    }
+    public Downloadlog(int softwareid,
+                           String accountid,
+                           Date time){
+            setAccountid(accountid);
+            setSoftwareid(softwareid);
+            setTime(time);
+        }

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>info</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+    function saveInfo() {
+      $.get('/changeInfo',{
+        "nick":$("#nick").val(),
+        "age":$("#age").val(),
+        "mail":$("#mail").val()
+      },function (msg) {
+        // updateInfo()
+        $('#msg').empty();
+        $('#msg').html("<h2 style='color: red;'>"+msg+"</h2>");
+      })
+    }
+    function updateInfo() {
+      $.get('/getInfo',
+        function (data) {
+          data = eval(data)
+          $('#topBarId').text(data.id)
+          $('#id').text(data.id)
+          $('#type').text(data.type)
+          $('#nick').val(data.nick)
+          $('#age').val(data.age)
+          $('#mail').val(data.mail)
+          if(data.type==='管理员'||data.type==='开发者') {
+            $('#uploadFile').empty()
+            $('#uploadFile').html("<a href='/fileUpload'><button>软件上传</button></a>")
+          }
+          else{
+            $('#uploadFile').empty()
+          }
+        },'JSON')
+    }
+  </script>
+
+</head>
+<body>
+
+<div class="topBar">
+  <a href="downloadLog">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="/userInfo" id="topBarId"></a>
+  <a href="/logout" id="logout">注销</a>
+</div>
+
+<div class="title"><h1>个人信息</h1></div>
+
+<div id="msg"></div>
+
+<table>
+  <tr>
+    <td>ID:</td>
+    <td>
+      <font id="id" ></font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>用户类型: </td>
+    <td>
+      <font id="type"></font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="nick">昵称: </label>
+    </td>
+    <td>
+      <input name="nick" id="nick" type="text">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="age">年龄: </label>
+    </td>
+    <td>
+      <input type="number" name="age" id="age">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="mail">邮箱: </label>
+    </td>
+    <td>
+      <input id="mail" name="mail" type="email">
+    </td>
+  </tr>
+
+  <tr align="right">
+    <td></td>
+    <td>
+      <button onclick="saveInfo()">保存修改</button>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  updateInfo()
+</script>
+<div>
+  <a href="/secureQuestion"><button>设置安全问题</button></a>
+  <a href="/changePassword"><button>修改密码</button></a>
+</div>
+<div id="uploadFile"></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/js.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+
+<div class="topBar">
+  <a href="downloadLog">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="/userInfo" id="id" th:text="${session.id}"></a>
+  <a href="/logout" id="logout">注销</a>
+</div>
+
+<div class="title">
+  <h1 align="center">下载历史</h1>
+</div>
+<div style="text-align: right">
+  <input type="button" value="清空历史" onclick="rmDownloadLog()">
+</div>
+
+<div id="downloadLogDiv"></div>
+
+<script type="text/javascript">
+  $.get('/getDownloadLog',function (list) {
+    list = eval(list)
+    htmlCode = ''
+    for(var i=0;i<list.length;++i){
+      software = list[i];
+      htmlCode += getDownloadLogHtmlBlock(software)
+    }
+    $('#downloadLogDiv').empty()
+    $('#downloadLogDiv').html(htmlCode)
+  },'JSON')
+</script>
+
+</body>
+</html>

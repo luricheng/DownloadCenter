@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+
+<div class="topBar">
+  <a href="login">历史下载</a>
+  <a href="/index">主页</a>
+  <a href="register" id="register">注册</a>
+  <a href="login" id="login">登录</a>
+</div>
+
+<div class="title"><h1>注册</h1></div>
+<form action="registerSubmit" method="post">
+  <table>
+    <tr>
+      <td colspan="2" align="right">
+        <label for="id">用户名: </label><input id="id" name="id" type="text" required>
+      </td>
+    </tr>
+    <tr align="right">
+      <td colspan="2"><label for="password">密码: </label><input id="password" name="password" type="password" required></td>
+    </tr>
+    <tr align="right">
+      <td colspan="2"><label for="passwordRepeat">重复密码: </label><input id="passwordRepeat" type="password" required></td>
+    </tr>
+    <tr align="right">
+      <td>
+        <a href="/retrievePassword">忘了密码</a>
+      </td>
+      <td>
+        <input type="submit" value="提交">
+      </td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

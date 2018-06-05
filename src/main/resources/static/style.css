@@ -1,0 +1,29 @@
+div{
+  text-align: center;
+  margin: 0 auto;
+  border-color: black;
+  border-radius: 15px;
+}
+
+.title{
+  background-color: #ff69c9;
+}
+
+.topBar{
+  background-color: aquamarine;
+  text-align: right;
+}
+
+table{
+  margin:auto;
+  background-color: antiquewhite;
+}
+
+h1{
+  margin: auto;
+  text-align: center;
+}
+
+body{
+  background-color: beige;
+}

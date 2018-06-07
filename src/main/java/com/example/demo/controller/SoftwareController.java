@@ -5,6 +5,7 @@ import com.example.demo.dao.SoftwareMapper;
 import com.example.demo.model.Account;
 import com.example.demo.model.Software;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,8 +57,9 @@ public class SoftwareController {
   public List<Map<String, String>> getSoftwareList() {
     try {
       ArrayList<Map<String, String>> result = new ArrayList<>();
-      for (int i = 0; i < 10; ++i) {
-        Software software = softwareMapper.selectByPrimaryKey(i + 1);
+      List<Software>softwareList = softwareMapper.selectAll();
+      for (int i = 0; i < softwareList.size(); ++i) {
+        Software software = softwareList.get(i);
         if (software == null) {
           break;
         }
@@ -154,5 +156,64 @@ public class SoftwareController {
       e.printStackTrace();
       return "软件上传失败";
     }
+  }
+
+  @RequestMapping(value = "/managerSoftware", method = RequestMethod.GET)
+  public String managerSoftware(){
+    return "managerSoftware";
+  }
+
+  @RequestMapping(value = "/getManagerSoftwareList", method = RequestMethod.POST)
+  @ResponseBody
+  public List<Map<String,String>>getManagerSoftwareList(HttpServletRequest request){
+    HttpSession session = request.getSession();
+    List<Map<String,String>>list = new ArrayList<>();
+    String accountId = (String)session.getAttribute("id");
+    if(accountId==null){
+      return list;
+    }
+    int type = accountMapper.selectByPrimaryKey(accountId).getType();
+    List<Software>softwareList = null;
+    if(type==3){ // admin
+      softwareList = softwareMapper.selectAll();
+    }
+    if(type==2){
+      softwareList = softwareMapper.selectBySourceKey(accountId);
+    }
+    for(int i = 0; i<softwareList.size();++i){
+      Software software = softwareList.get(i);
+      Map<String,String>map = new HashMap<>();
+      map.put("id", software.getId().toString());
+      map.put("name", software.getName());
+      map.put("source", software.getSource());
+      map.put("introduce", software.getIntroduce());
+      map.put("downloadLink", software.getDownloadlink());
+      map.put("imgLink", software.getImglink());
+      list.add(map);
+    }
+    return list;
+  }
+
+  private boolean deleteFile(String fileName){
+    File file = new File(fileName);
+    if(file.exists()){
+      if(file.isFile()){
+        return file.delete();
+      }
+    }
+    return false;
+  }
+
+  @RequestMapping(value = "/underCarriage", method = RequestMethod.GET)
+  @ResponseBody
+  public String underCarriage(String softwareId){
+    int id=Integer.valueOf(softwareId);
+    Software software = softwareMapper.selectByPrimaryKey(id);
+    deleteFile(software.getDownloadlink());
+    deleteFile(software.getImglink());
+    if(softwareMapper.deleteByPrimaryKey(id)>0){
+      return "success";
+    }
+    return "failed";
   }
 }

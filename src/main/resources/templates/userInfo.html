@@ -30,6 +30,8 @@
           if(data.type==='管理员'||data.type==='开发者') {
             $('#uploadFile').empty()
             $('#uploadFile').html("<a href='/fileUpload'><button>软件上传</button></a>")
+            $('#manager').empty()
+            $('#manager').html("<a href='/managerSoftware'><button>管理软件</button></a>")
           }
           else{
             $('#uploadFile').empty()
@@ -110,5 +112,6 @@
   <a href="/changePassword"><button>修改密码</button></a>
 </div>
 <div id="uploadFile"></div>
+<div id="manager"></div>
 </body>
 </html>

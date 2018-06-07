@@ -82,4 +82,21 @@ public interface SoftwareMapper {
         @Result(column="downloadCount", property="downloadcount", jdbcType=JdbcType.INTEGER)
     })
     List<Software> selectAll();
+
+    @Select({
+        "select",
+        "id, name, source, introduce, downloadLink, imgLink, downloadCount",
+        "from Software",
+        "where source = #{source,jdbcType=VARCHAR}"
+    })
+    @Results({
+        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="source", property="source", jdbcType=JdbcType.VARCHAR),
+        @Result(column="introduce", property="introduce", jdbcType=JdbcType.VARCHAR),
+        @Result(column="downloadLink", property="downloadlink", jdbcType=JdbcType.VARCHAR),
+        @Result(column="imgLink", property="imglink", jdbcType=JdbcType.VARCHAR),
+        @Result(column="downloadCount", property="downloadcount", jdbcType=JdbcType.INTEGER)
+    })
+    List<Software> selectBySourceKey(String source);
 }

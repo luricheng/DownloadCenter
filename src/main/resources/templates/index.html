@@ -6,9 +6,26 @@
   <link rel="stylesheet" type="text/css" href="style.css"/>
   <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
   <script type="text/javascript" src="/jquery-3.3.1.min.js"></script>
-  
+  <script type="text/javascript" src="/script/index.js"></script>
   <script type="text/javascript" src="/js.js"></script>
-  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $.get('/getSoftwareList',
+        function (data) {
+          list = eval(data);
+          htmlCode=""
+          for(var i=0;i<list.length;++i){
+            software=list[i]
+            console.log(i+": "+software.name)
+            htmlCode += getSoftwareHtmlBlock(software)
+          }
+          $('#softwareList').empty();
+          $('#softwareList').html(htmlCode);
+        },'JSON')
+    })
+  </script>
+
 </head>
 <body>
 <div class="topBar">
@@ -38,19 +55,5 @@
 <div id="softwareList">
 
 </div>
-
-<script type="text/javascript">
-  $.get('/getSoftwareList',
-    function (data) {
-      list = eval(data);
-      htmlCode=""
-      for(var i=0;i<list.length;++i){
-        software=list[i]
-        htmlCode = getSofwareHtmlBlock(software)
-      }
-      $('#softwareList').empty();
-      $('#softwareList').html(htmlCode);
-    },'JSON')
-</script>
 </body>
 </html>
